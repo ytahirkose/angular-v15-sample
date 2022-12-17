@@ -1,1 +1,27 @@
-<p>nav works!</p>
+<nav class="shadow">
+  <div class="d-flex align-items-center ms-4 pointer-event z-index-1">
+    <a routerLink="/">
+      <img src="assets/lp-moneytolia-logo.svg">
+    </a>
+  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu" class="menu-button me-2">
+    <mat-icon class="menu-button-icon">more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/campaigns">
+      <mat-icon>dialpad</mat-icon>
+      <span>Kampanyalar</span>
+    </button>
+    <button mat-menu-item routerLink="/new-campaign">
+      <mat-icon>add</mat-icon>
+      <span>Yeni Kampanya</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>remove</mat-icon>
+      <span>Çıkış</span>
+    </button>
+  </mat-menu>
+  <button class="logout btn btn-close-white me-2 h-75 mt-1" (click)="logout()">
+    Çıkış
+  </button>
+</nav>

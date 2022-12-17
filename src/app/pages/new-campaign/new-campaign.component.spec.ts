@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NewCampaignComponent } from './new-campaign.component';
+import {NewCampaignComponent} from './new-campaign.component';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -8,9 +8,9 @@ describe('NewCampaignComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewCampaignComponent ]
+      declarations: [NewCampaignComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NewCampaignComponent);
     component = fixture.componentInstance;

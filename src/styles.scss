@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+
+body {
+  margin: 0;
+  font-family: Rubik, "Helvetica Neue", sans-serif;
+}
+
+#root {
+  position: relative
+}
+
+.main {
+  width: 80%;
+  background-color: rgba(245, 79, 0, 0.1);
+  padding: 5%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    width: 100%;
+    padding: 2%;
+  }
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: rgba(245, 79, .0001);
+}
+
+.mdc-line-ripple::after {
+  border-bottom-color: rgba(245, 79, 0, 1) !important;
+  border-bottom-width: 4px !important;
+}

@@ -1,1 +1,87 @@
-<p>campaigns works!</p>
+<app-nav></app-nav>
+<div class="d-flex justify-content-between">
+  <app-side-bar></app-side-bar>
+  <main class="main align-items-center">
+    <section class="w-100 overflow-scroll">
+      <div>
+        <h1>Kampanyalar</h1>
+        <table *ngIf="dataSource.data.length" mat-table [dataSource]="dataSource" matSort
+               (matSortChange)="announceSortChange($event)"
+               class="mat-elevation-z8">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="point">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+              Puan
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.point}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+              Başlık
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+              Açıklama
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="createDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+              Tarih
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="buton">
+            <th mat-header-cell *matHeaderCellDef>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button (click)="editCampaign(element.id)" class="btn btn-outline-secondary me-1">
+                Düzenle
+              </button>
+              <button (click)="deleteCampaign(element.id)" class="btn btn-outline-danger">
+                Sil
+              </button>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <div class="mt-5 w-100 d-flex justify-content-center" *ngIf="!dataSource.data.length">
+        <div class="w-50 text-center">
+          <button class="w-50 btn btn-outline-success" routerLink="/new-campaign">+ Kampanya Ekle</button>
+          <h2 class="mt-2">Kampanya Bulunmamaktadır.</h2>
+        </div>
+      </div>
+      <div *ngIf="editModalIsOpen" class="position-relative">
+        <div class="editCampaignModal">
+          <div class="main-modal">
+            <div class="modal-header mb-4">
+              <h2>Kampanya Düzenle</h2>
+              <button class="btn btn-danger" (click)="closeModal(false)">Kapat</button>
+            </div>
+            <div class="modal-body">
+              <app-campaign-form [selectedCampaignId]="selectedCampaignId"
+                                 (closeEditPopUp)="closeModal($event)"></app-campaign-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<app-footer></app-footer>

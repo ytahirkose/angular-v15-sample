@@ -1,1 +1,47 @@
-<p>campaign-form works!</p>
+<form class="d-flex d-column" [formGroup]="campaignForm" (ngSubmit)="handleSubmit()">
+
+  <mat-form-field hintLabel="" appearance="fill">
+    <mat-label>Başlık</mat-label>
+    <input matInput formControlName="name" maxlength="20" placeholder="Başlık Giriniz">
+    <mat-hint *ngIf="campaignForm.get('name')?.dirty &&  campaignForm.get('name')?.hasError('required')">Başlık
+      zorunludur!
+    </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field hintLabel="" appearance="fill">
+    <mat-label>Açıklama</mat-label>
+    <input matInput formControlName="description" maxlength="40" placeholder="Açıklama Giriniz"/>
+    <mat-hint *ngIf="campaignForm.get('description')?.dirty &&  campaignForm.get('description')?.hasError('required')">
+      Açıklama zorunludur!
+    </mat-hint>
+  </mat-form-field>
+
+  <div class="d-flex">
+    <button mat-fab extended color="accent" type="button"
+            (click)="campaignForm. controls['point'].setValue(campaignForm.get('point')?.value+1)" class="me-1">
+      <mat-icon>add</mat-icon>
+      Artır
+    </button>
+    <button mat-fab extended color="accent" type="button"
+            (click)="campaignForm. controls['point'].setValue(campaignForm.get('point')?.value-1)">
+      <mat-icon>remove</mat-icon>
+      Azalt
+    </button>
+  </div>
+
+  <mat-form-field hintLabel="" appearance="fill" class="mt-3">
+    <mat-label>Puan</mat-label>
+    <input matInput formControlName="point" maxlength="20" placeholder="O" type="number" min="0">
+    <mat-hint *ngIf="campaignForm.get('point')?.dirty && campaignForm.get('point')?.hasError('required')">Puan
+      zorunludur!
+    </mat-hint>
+    <mat-hint *ngIf="campaignForm.get('point')?.value < 0">Puan Sıfırdan Büyük Olmalıdır!</mat-hint>
+  </mat-form-field>
+
+  <div class="d-flex justify-content-between">
+    <button type="reset" class="btn btn-danger w-50">Temizle</button>
+    <button type="submit" class="btn btn-success w-50">Kaydet</button>
+  </div>
+
+</form>
+

@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="w-100 p-5 login">
+  <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()" class="login-form">
+    <div class="row g-0 mb-5">
+      <img src="assets/lp-moneytolia-logo.svg">
+    </div>
+    <div class="row g-0">
+      <mat-form-field hintLabel="" appearance="fill">
+        <mat-label>Kullanıcı Adı Giriniz</mat-label>
+        <input matInput formControlName="userName" maxlength="20" placeholder="Kullanıcı Adı">
+        <mat-hint *ngIf="loginForm.get('userName')?.dirty && loginForm.get('userName')?.hasError('required')">Kullanıcı
+          adı
+          zorunludur!
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="row g-0">
+      <mat-form-field appearance="fill">
+        <mat-label>Şifre Giriniz</mat-label>
+        <input matInput formControlName="password" maxlength="20" minlength="6" placeholder="Şifre"
+               [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide" type="button">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint *ngIf="loginForm.get('password')?.dirty && loginForm.get('password')?.hasError('required')">Şifre
+          zorunludur!
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="row g-0">
+      <button type="submit" class="btn btn-success w-100">Giriş Yap</button>
+    </div>
+
+  </form>
+</div>
