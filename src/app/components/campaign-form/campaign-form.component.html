@@ -23,7 +23,7 @@
       Artır
     </button>
     <button mat-fab extended color="accent" type="button"
-            (click)="campaignForm.get('point')?.value == 0 ? alertify.error('Puan sıfırdan küçük olamaz'): campaignForm.controls['point'].setValue(campaignForm.get('point')?.value-1)">
+            (click)="campaignForm.get('point')?.value == 0 ? null: campaignForm.controls['point'].setValue(campaignForm.get('point')?.value-1)">
       <mat-icon>remove</mat-icon>
       Azalt
     </button>

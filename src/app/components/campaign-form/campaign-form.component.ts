@@ -54,6 +54,7 @@ export class CampaignFormComponent implements OnInit {
   }
 
   handleSubmit() {
+    alertify.dismissAll()
     if (this.campaignForm.valid) {
       if (this.selectedCampaignId) {
         this.campaignService.editCampaign(this.campaignForm.value);
@@ -65,7 +66,7 @@ export class CampaignFormComponent implements OnInit {
         this.router.navigate(['campaigns'])
       }
     } else {
-      alertify.success('Lütfen Geçerli Değerler Giriniz!')
+      alertify.error('Lütfen Geçerli Değerler Giriniz!')
     }
   }
 
