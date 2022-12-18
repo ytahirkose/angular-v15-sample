@@ -30,6 +30,7 @@ export class LoginComponent {
   }
 
   handleSubmit() {
+    alertify.dismissAll()
     if (this.loginForm.valid) {
       if (this.loginService.login(this.loginForm.value)) {
         alertify.success('Giriş Başarılı')
