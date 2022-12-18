@@ -4,12 +4,11 @@
   <main class="main align-items-center">
     <section class="w-100 overflow-scroll">
       <div>
-        <h1>Kampanyalar</h1>
-        <table *ngIf="dataSource.data.length" mat-table [dataSource]="dataSource" matSort
+        <h1 class="mt-5 text-center w-100">Kampanyalar</h1>
+        <table *ngIf="dataSource.data.length" mat-table [dataSource]="dataSource" matSort multiTemplateDataRows
                (matSortChange)="announceSortChange($event)"
                class="mat-elevation-z8">
 
-          <!-- Position Column -->
           <ng-container matColumnDef="point">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
               Puan
@@ -17,7 +16,6 @@
             <td mat-cell *matCellDef="let element"> {{element.point}} </td>
           </ng-container>
 
-          <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
               Başlık
@@ -25,7 +23,6 @@
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
-          <!-- Weight Column -->
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
               Açıklama
@@ -33,7 +30,6 @@
             <td mat-cell *matCellDef="let element"> {{element.description}} </td>
           </ng-container>
 
-          <!-- Symbol Column -->
           <ng-container matColumnDef="createDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
               Tarih
@@ -41,10 +37,8 @@
             <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
           </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="buton">
-            <th mat-header-cell *matHeaderCellDef>
-            </th>
+          <ng-container matColumnDef="buttons">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
             <td mat-cell *matCellDef="let element">
               <button (click)="editCampaign(element.id)" class="btn btn-outline-secondary me-1">
                 Düzenle
@@ -52,12 +46,36 @@
               <button (click)="deleteCampaign(element.id)" class="btn btn-outline-danger">
                 Sil
               </button>
+              <button *ngIf="!isDesktop" mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+              </button>
             </td>
           </ng-container>
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsWithButtons.length">
+              <div class="example-element-detail"
+                   [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+                  <p><strong>Açıklama</strong> {{element.description}}</p>
+                  <p><strong>Puan</strong> {{element.point}}</p>
+                  <p><strong>Oluşturma Tarihi</strong> {{element.createDate}}</p>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsWithButtons"></tr>
+
+          <tr mat-row *matRowDef="let element; columns: displayedColumnsWithButtons;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element"
+              (click)="setExpandedElement(element)">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
       </div>
       <div class="mt-5 w-100 d-flex justify-content-center" *ngIf="!dataSource.data.length">

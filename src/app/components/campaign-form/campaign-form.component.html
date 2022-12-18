@@ -18,12 +18,12 @@
 
   <div class="d-flex">
     <button mat-fab extended color="accent" type="button"
-            (click)="campaignForm. controls['point'].setValue(campaignForm.get('point')?.value+1)" class="me-1">
+            (click)="campaignForm.controls['point'].setValue(campaignForm.get('point')?.value+1)" class="me-1">
       <mat-icon>add</mat-icon>
       Artır
     </button>
     <button mat-fab extended color="accent" type="button"
-            (click)="campaignForm. controls['point'].setValue(campaignForm.get('point')?.value-1)">
+            (click)="campaignForm.get('point')?.value == 0 ? alertify.error('Puan sıfırdan küçük olamaz'): campaignForm.controls['point'].setValue(campaignForm.get('point')?.value-1)">
       <mat-icon>remove</mat-icon>
       Azalt
     </button>
@@ -31,7 +31,8 @@
 
   <mat-form-field hintLabel="" appearance="fill" class="mt-3">
     <mat-label>Puan</mat-label>
-    <input matInput formControlName="point" maxlength="20" placeholder="O" type="number" min="0">
+    <input matInput formControlName="point" maxlength="20" placeholder="O" type="number" min="0"
+           (keypress)="numCheck($event)">
     <mat-hint *ngIf="campaignForm.get('point')?.dirty && campaignForm.get('point')?.hasError('required')">Puan
       zorunludur!
     </mat-hint>

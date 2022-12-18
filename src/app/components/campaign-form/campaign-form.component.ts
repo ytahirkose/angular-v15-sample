@@ -14,7 +14,7 @@ export class CampaignFormComponent implements OnInit {
 
   @Input() selectedCampaignId: string | undefined;
   campaignForm!: FormGroup;
-
+  alertify = alertify;
   @Output() closeEditPopUp = new EventEmitter<boolean>();
 
 
@@ -69,4 +69,17 @@ export class CampaignFormComponent implements OnInit {
     }
   }
 
+  numCheck(e:any) {
+    return this.numberRegex.test(e.key)
+  }
+
+  setForm() {
+    const campaign = this.campaignService.getCampaignById(this.selectedCampaignId);
+    this.campaignForm.controls['name'].setValue(campaign.name);
+    this.campaignForm.controls['description'].setValue(campaign.description);
+    this.campaignForm.controls['point'].setValue(campaign.point);
+    this.campaignForm.controls['createDate'].setValue(campaign.createDate);
+    this.campaignForm.controls['editDate'].setValue(campaign.editDate);
+    this.campaignForm.controls['id'].setValue(campaign.id);
+  }
 }

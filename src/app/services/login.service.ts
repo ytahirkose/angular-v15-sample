@@ -6,16 +6,17 @@ import {User} from "../models/user";
 })
 export class LoginService {
 
-  activeUser: User | undefined;
+  activeUser: User;
 
   constructor() {
+    this.activeUser = new User()
   }
 
   checkAuth(): boolean {
-    let user = JSON.parse(window.localStorage.getItem('activeUser') || '');
-    if (user) {
-      this.activeUser = user;
-      return user.isLoggedIn;
+    let storeData = localStorage.getItem('activeUser');
+    if (storeData) {
+      this.activeUser = JSON.parse(storeData);
+      return this.activeUser.isLoggedIn;
     } else {
       return false;
     }
