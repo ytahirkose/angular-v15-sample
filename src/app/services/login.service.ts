@@ -6,16 +6,14 @@ import {User} from "../models/user";
 })
 export class LoginService {
 
-  // @ts-ignore
-  activeUser: User;
+  activeUser: User | undefined;
 
   constructor() {
   }
 
   checkAuth(): boolean {
-    let user: User;
-    if (window.localStorage.getItem('activeUser')) {
-      user = JSON.parse(window.localStorage.getItem('activeUser') || '');
+    let user = JSON.parse(window.localStorage.getItem('activeUser') || '');
+    if (user) {
       this.activeUser = user;
       return user.isLoggedIn;
     } else {
@@ -42,6 +40,6 @@ export class LoginService {
   }
 
   getActiveUser(): User {
-    return this.activeUser
+    return this.activeUser!
   }
 }
