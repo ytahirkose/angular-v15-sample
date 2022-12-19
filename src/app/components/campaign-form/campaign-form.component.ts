@@ -12,45 +12,44 @@ declare let alertify: any;
 })
 export class CampaignFormComponent implements OnInit {
 
-  @Input() selectedCampaignId: string | undefined;
+  _selectedCampaignId: string = '';
+  get selectedCampaignId(): string {
+    return this._selectedCampaignId;
+  }
+  @Input() set selectedCampaignId(value: string) {
+    if(value) {
+      this._selectedCampaignId = value;
+      this.setForm();
+    }
+  }
+
   campaignForm!: FormGroup;
   alertify = alertify;
   @Output() closeEditPopUp = new EventEmitter<boolean>();
 
+  numberRegex = /^[0-9]+$/;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private campaignService: CampaignService) {
-
-  }
-
-  ngOnInit(): void {
     this.createNewForm()
   }
 
+  ngOnInit(): void {
+
+  }
+
   createNewForm() {
-    if (this.selectedCampaignId) {
-      const campaign = this.campaignService.getCampaignById(this.selectedCampaignId)
-      this.campaignForm = this.formBuilder.group({
-        name: [campaign.name, Validators.required],
-        description: [campaign.description, Validators.required],
-        point: [campaign.point, Validators.required],
-        createDate: [campaign.createDate],
-        editDate: [campaign.editDate],
-        id: [campaign.id]
-      });
-    } else {
-      const date = new Date()
-      this.campaignForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        description: ['', Validators.required],
-        point: [0, [Validators.required, Validators.min(0)]],
-        createDate: [`${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`],
-        editDate: [''],
-        id: [date.getTime()]
-      });
-    }
+    const date = new Date()
+    this.campaignForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      point: [0, [Validators.required, Validators.min(0)]],
+      createDate: [`${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`],
+      editDate: [''],
+      id: [date.getTime()]
+    });
   }
 
   handleSubmit() {
